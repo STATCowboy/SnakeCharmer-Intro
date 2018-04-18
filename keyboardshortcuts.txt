@@ -1,0 +1,10 @@
+Jupyter
+---------
+CTL+ENTER - Run Cell
+SHIFT+ENTER - Run Cell and Select Below
+
+PyCharm
+---------
+ALT+SHIFT+E - Run Line and Goto Next
+ALT+SHIFT+F10 - Run Entire File
+
