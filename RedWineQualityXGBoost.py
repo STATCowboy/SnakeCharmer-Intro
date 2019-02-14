@@ -4,7 +4,7 @@
 #
 # Adapted from https://machinelearningmastery.com/save-gradient-boosting-models-xgboost-python/
 #
-# How to install XGBoost on Windows - http://www.picnet.com.au/blogs/guido/post/2016/09/22/xgboost-windows-x64-binaries-for-download/
+# How to install XGBoost on Windows - https://xgboost.readthedocs.io/en/latest/build.html
 
 
 from numpy import loadtxt, vstack, column_stack
@@ -17,7 +17,7 @@ from sklearn.metrics import accuracy_score
 dataset = loadtxt('winequality-red-NoHeader.csv', delimiter=",")
 
 # Headers of Data
-# "fixed acidity","volatile acidity","citric acid","residual sugar","chlorides","free sulfur dioxide","total sulfur dioxide","density","pH","sulphates","alcohol","quality"
+## "fixed acidity","volatile acidity","citric acid","residual sugar","chlorides","free sulfur dioxide","total sulfur dioxide","density","pH","sulphates","alcohol","quality"
 
 # Split the wine data into X (independent variable) and y (dependent variable)
 X = dataset[:, 0:11]
@@ -47,6 +47,8 @@ print("Accuracy: %.2f%%" % (accuracy * 100.0))
 
 # Create Dataset with Prediction and Inputs
 predictionResult = column_stack(([X_valid, vstack(y_valid), vstack(y_pred)]))
+
+
 
 # Try a Simple Decision Tree
 # Adapted from http://scikit-learn.org/stable/modules/tree.html
