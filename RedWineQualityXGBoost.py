@@ -2,9 +2,7 @@
 # Save model to file using pickle
 # Load model and make predictions and validation set
 #
-# Adapted from https://machinelearningmastery.com/save-gradient-boosting-models-xgboost-python/
-#
-# How to install XGBoost on Windows - https://xgboost.readthedocs.io/en/latest/build.html
+# How to install XGBoost on Windows - http://www.picnet.com.au/blogs/guido/post/2016/09/22/xgboost-windows-x64-binaries-for-download/
 
 
 from numpy import loadtxt, vstack, column_stack
@@ -14,10 +12,10 @@ from sklearn import model_selection
 from sklearn.metrics import accuracy_score
 
 # Load the Wine Data
-dataset = loadtxt('winequality-red-NoHeader.csv', delimiter=",")
+dataset = loadtxt('winequality-red.csv', delimiter=";", skiprows=1)
 
 # Headers of Data
-## "fixed acidity","volatile acidity","citric acid","residual sugar","chlorides","free sulfur dioxide","total sulfur dioxide","density","pH","sulphates","alcohol","quality"
+# "fixed acidity","volatile acidity","citric acid","residual sugar","chlorides","free sulfur dioxide","total sulfur dioxide","density","pH","sulphates","alcohol","quality"
 
 # Split the wine data into X (independent variable) and y (dependent variable)
 X = dataset[:, 0:11]
@@ -31,14 +29,9 @@ X_train, X_valid, y_train, y_valid = model_selection.train_test_split(X, Y, test
 # Fit model on Wine Training Data and save model to Pickle file
 model = xgboost.XGBClassifier()
 model.fit(X_train, y_train)
-# save model to file
-pickle.dump(model, open("winequality-red.pickle.dat", "wb"))
-
-# Load model from Pickle file
-loaded_model = pickle.load(open("winequality-red.pickle.dat", "rb"))
 
 # Make predictions for Validation data
-y_pred = loaded_model.predict(X_valid)
+y_pred = model.predict(X_valid)
 predictions = [round(value) for value in y_pred]
 
 # Evaluate predictions
@@ -49,9 +42,19 @@ print("Accuracy: %.2f%%" % (accuracy * 100.0))
 predictionResult = column_stack(([X_valid, vstack(y_valid), vstack(y_pred)]))
 
 
+# save model to file for later use in prediction
+pickle.dump(model, open("winequality-red.pickle.dat", "wb"))
+
+# Load model from Pickle file
+loaded_model = pickle.load(open("winequality-red.pickle.dat", "rb"))
+
+# Predict a Wine Quality (Class) from inputs
+loaded_model.predict([[6.8, .47, .08, 2.2, .0064, 18.0, 38.0, .999933, 3.2, .64, 9.8, ]])
+
+
 
 # Try a Simple Decision Tree
-# Adapted from http://scikit-learn.org/stable/modules/tree.html
+# 
 from sklearn import tree
 
 # Train Model
